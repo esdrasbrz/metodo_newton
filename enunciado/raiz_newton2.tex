@@ -1,0 +1,113 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\usepackage{xcolor}
+% Definindo novas cores
+\definecolor{verde}{rgb}{0,0.5,0}
+% Configurando layout para mostrar codigos C++
+\usepackage{listings}
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{verde},
+  commentstyle=\color{red},
+  extendedchars=true,
+  showspaces=false,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true,
+  backgroundcolor=\color{green!10},
+  breakautoindent=true,
+  captionpos=b,
+  xleftmargin=0pt,
+}
+
+
+\author{Esdras R. Carmo}
+\title{Aproximando Raizes de Funções de Duas Variáveis}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+
+    \section{Aproximando $\sqrt{2}$}
+        \paragraph{}
+        Há várias possibilidades de aproximar o valor de um irracional computacionalmente.
+        Em se tratando de raízes quadradas, pode-se determinar uma função quadrática cuja
+        raíz é o irracional procurado e assim determinar a raíz com base em algum método de cálculo numérico.
+
+        \paragraph{}
+        Se quisermos calcular $\sqrt{2}$, por exemplo, podemos assumir:
+        \begin{align*}
+            f&: \mathbbm{R}^+ \longrightarrow \mathbbm{R}\\
+            f(x) &= x^2 - 2\\
+            f(x) &= 0 \Rightarrow x = \sqrt{2}
+        \end{align*}
+
+        \paragraph{}
+        Assim, conseguimos estimar um irracional se conseguirmos determinar a raíz de nossa função.
+
+        \subsection{Método para estimar a raiz}
+            \paragraph{}
+            O método sugerido para estimar a raíz da função $f(x)$ consiste em uma simplificação
+            do método de Newton.
+            \paragraph{}
+            Supondo que a função tem uma raíz no intervalo $I = ]i, s[$, sendo
+            $i$ e $s$ constantes conhecidas, podemos aproximar a raíz da seguinte forma:
+
+            \begin{enumerate}
+                \item Tomamos $m$ o ponto médio do intervalo, i. e., $m = \frac{i + s} {2}$;
+                \item Assumindo uma função crescente em $I$, então verificamos os seguintes casos:
+                \begin{itemize}
+                    \item Se $f(m) > 0$, então tomamos $s' = m$ e atualizamos o nosso intervalo para
+                    $I' = ]i, s'[$;
+
+                    \item Se $f(m) < 0$, então tomamos $i' = m$ e atualizamos o nosso intervalo para
+                    $I' = ]i', s[$;
+                \end{itemize}
+                \item Sendo $\delta$ uma constante conhecida que dirá a precisão buscada pelo método,
+                verificamos se, no novo intervalo formado, $f(s) - f(i) \leq \delta$. Caso a desigualdade se
+                observe, a raíz de $f(x)$ será $x = \frac{i + s} {2}$. Caso contrário, deve-se retornar ao item 1 com
+                o novo intervalo.
+            \end{enumerate}
+
+        \subsection{Implementação em linguagem C}
+            \paragraph{}
+            Sabendo disso, é possível escrever um programa que calcule $\sqrt{2}$ utilizando um intervalo $I$ e um
+            erro $\delta$ conhecidos.
+
+            \paragraph{}
+            Para esse caso, suponha inicialmente $I = ]1, 2[$, i. e., $i = 1$ e $s = 2$. Utilize também $\delta = 0.000001$.
+            Para isso, pode-se definir uma constante com o valor de $\delta$ no início do programa da seguinte forma:
+            \begin{lstlisting}
+#include <stdio.h>
+#define DELTA 0.000001
+
+int main(void) {
+    /* ... */
+    // referenciando a constante definida no inicio
+    if (x <= DELTA) { /* ... */ }
+    /* ... */
+}
+            \end{lstlisting}
+
+            \paragraph{}
+            Lembre-se de utilizar apenas a biblioteca \textit{stdio.h} e apenas estruturas de laços e condicionais. Além disso,
+            é aconselhável a utilização de variáveis tipo \textit{double} quando necessitar de ponto flutuante.
+
+
+    \section{Implementação para $\sqrt{n}$}
+        \paragraph{}
+        Quando o seu programa funcionar para o caso $\sqrt{2}$, altere-o para calcular $\sqrt{n}$ sendo $n$ um número natural.
+        Para isso, receba um inteiro da entrada e modifique os limites iniciais do intervalo $I$ conforme o inteiro dado, e não
+        mais como uma constante conhecida no momento da programação.
+\end{document}
