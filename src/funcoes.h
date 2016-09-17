@@ -6,15 +6,15 @@
 #define FUNCOES
 
 double f(double x, double y) {
-    return x*x*x + y*y - 3;
+    return x*x - y*y*y - 2.0;
 }
 
-double fx(double x) {
-    return 3 * x*x;
+double fx(double x, double y) {
+    return 2.0*x;
 }
 
-double fy(double y) {
-    return 2 * y;
+double fy(double x, double y) {
+    return -3.0*y*y;
 }
 
 #endif
